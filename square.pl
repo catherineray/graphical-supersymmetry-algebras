@@ -1,0 +1,278 @@
+%Edges can be either 0 or 1
+color(0).
+color(1).
+
+even(N) :-
+  0 is N mod 2.
+  
+odd(N) :-
+  1 is N mod 2.
+
+even(A, B) :-
+  0 is A mod 2,
+  0 is B mod 2.
+  
+evenSum(A, B, C, D) :- 
+  Sum = A + B + C + D,
+  even(Sum).
+  
+oddSum(A, B, C, D) :- 
+  Sum = A + B + C + D,
+  odd(Sum).
+  
+%Check that the sum of the edges of a 4-cycle is odd
+square(E1, E2, E3, E4) :- 
+    color(E1), color(E2), color(E3), color(E4),  %seperates the statements that must be satisfied
+    oddSum(E1, E2, E3, E4).
+
+%coordinates on the edge of the cube is a 3 tuple, (x,y,z) <=> Exyz
+%Ee00, x = e, y = 0, z=0 
+%where e is a place holder for the slot that is changing, the other 2 slots are fixed
+
+%Prolog is a declaritive language, thus we will generate the legal 4 cycles in our friend, Haskell.
+cube(Ee00, E0e0, E00e,
+     Ee01, E0e1, E01e,
+	 Ee10, E1e0, E10e,
+	 Ee11, E1e1, E11e) :- 
+	 square(Ee00, E0e0, Ee10, E1e0),
+	 square(E00e, E0e0, E01e, E0e1),
+	 square(E10e, E11e, E1e0, E1e1),
+	 square(Ee00, E00e, E10e, Ee01),
+	 square(E01e, Ee10, E11e, Ee11),
+	 square(Ee01, Ee11, E0e1, E1e1).
+
+%Count the number of cubes:	
+%findall ([12 edges], cube(12 edges), list)
+%name variables
+name something that does things
+%name where the elements go
+%length(list name, length of list variable)
+	 
+dim4(Ee110, E101e, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0) :-
+	square(E000e, E001e, E00e0, E00e1),
+	square(E0e00, E010e, E0e01, E000e),
+	square(E01e0, E0e00, E0e10, E00e0),
+	square(E100e, Ee001, Ee000, E000e),
+	square(Ee000, E00e0, E10e0, Ee010),
+	square(E0e00, E1e00, Ee000, Ee100),
+	square(E01e0, E010e, E011e, E01e1),
+	square(E001e, E0e10, E0e11, E011e),
+	square(E0e01, E00e1, E0e11, E01e1),
+	square(E101e, Ee011, E001e, Ee010),
+	square(Ee001, Ee011, E10e1, E00e1),
+	square(E1e01, E0e01, Ee001, Ee101),
+	square(E100e, E101e, E10e1, E10e0),
+	square(E100e, E1e01, E1e00, E110e),
+	square(E1e00, E10e0, E1e10, E11e0),
+	square(E010e, Ee101, E110e, Ee100),
+	square(E01e0, Ee110, Ee100, E11e0),
+	square(Ee110, E0e10, E1e10, Ee010),
+	square(E110e, E11e1, E11e0, E111e),
+	square(E101e, E1e11, E1e10, E111e),
+	square(E1e01, E1e11, E10e1, E11e1),
+	square(Ee110, Ee111, E111e, E011e),
+	square(Ee101, Ee111, E11e1, E01e1),
+	square(Ee011, E1e11, Ee111, E0e11).
+	
+dim42(Ee110, E101e, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0) :-
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E0e11, E00e1, E11e0, E11e1, E10e1, Ee010, E0e01, Ee100, Ee111, E00e0, E0e00, Ee101, Ee011, Ee000, E01e1, E1e00, E1e11, Ee001, E0e10, E10e0, E1e01, E1e10, E01e0),
+cube(Ee110, E101e, E0e11, Ee010, E0e01, Ee100, Ee111, E111e, E110e, E0e00, E011e, Ee101, Ee011, E001e, Ee000, E010e, E100e, E1e00, E1e11, E000e, Ee001, E0e10, E1e01, E1e10),
+cube(Ee110, E101e, E00e1, E11e0, E11e1, E10e1, Ee010, Ee100, Ee111, E00e0, E111e, E110e, E011e, Ee101, Ee011, E001e, Ee000, E010e, E01e1, E100e, E000e, Ee001, E10e0, E01e0),
+cube(E101e, E0e11, E00e1, E11e0, E11e1, E10e1, E0e01, E00e0, E111e, E110e, E0e00, E011e, E001e, E010e, E01e1, E100e, E1e00, E1e11, E000e, E0e10, E10e0, E1e01, E1e10, E01e0).	
+	
+dim5(E0000e, E0001e, E000e0, E000e1, E0010e, E0011e, E001e0, E001e1, E00e00, E00e01, E00e10, E00e11, E0100e, E0101e, E010e0, E010e1, E0110e, E0111e, E011e0, E011e1, E01e00, E01e01, E01e10, E01e11, E0e000, E0e001, E0e010, E0e011, E0e100, E0e101, E0e110, E0e111, E1000e, E1001e, E100e0, E100e1, E1010e, E1011e, E101e0, E101e1, E10e00, E10e01, E10e10, E10e11, E1100e, E1101e, E110e0, E110e1, E1110e, E1111e, E111e0, E111e1, E11e00, E11e01, E11e10, E11e11, E1e000, E1e001, E1e010, E1e011, E1e100, E1e101, E1e110, E1e111, Ee0000, Ee0001, Ee0010, Ee0011, Ee0100, Ee0101, Ee0110, Ee0111, Ee1000, Ee1001, Ee1010, Ee1011, Ee1100, Ee1101, Ee1110, Ee1111) :-
+	square(E000e0, E0000e, E000e1, E0001e),
+	square(E00e00, E0000e, E00e01, E0010e),
+	square(E000e0, E00e00, E00e10, E001e0),
+	square(E0e000, E0000e, E0100e, E0e001),
+	square(E0e000, E000e0, E010e0, E0e010),
+	square(E0e000, E00e00, E0e100, E01e00),
+	square(E1000e, E0000e, Ee0001, Ee0000),
+	square(E100e0, E000e0, Ee0010, Ee0000),
+	square(E00e00, Ee0100, E10e00, Ee0000),
+	square(E0e000, Ee1000, E1e000, Ee0000),
+	square(E000e0, E0000e, E000e1, E0001e),
+	square(E00e00, E0000e, E00e01, E0010e),
+	square(E000e0, E00e00, E00e10, E001e0),
+	square(E0e000, E0000e, E0100e, E0e001),
+	square(E0e000, E000e0, E010e0, E0e010),
+	square(E0e000, E00e00, E0e100, E01e00),
+	square(E1000e, E0000e, Ee0001, Ee0000),
+	square(E100e0, E000e0, Ee0010, Ee0000),
+	square(E00e00, Ee0100, E10e00, Ee0000),
+	square(E0e000, Ee1000, E1e000, Ee0000),
+	square(E001e1, E001e0, E0011e, E0010e),
+	square(E00e10, E00e11, E0011e, E0001e),
+	square(E00e11, E00e01, E001e1, E000e1),
+	square(E0e011, E0e010, E0001e, E0101e),
+	square(E0e011, E010e1, E000e1, E0e001),
+	square(E0e101, E01e01, E00e01, E0e001),
+	square(E0001e, E1001e, Ee0010, Ee0011),
+	square(Ee0001, E000e1, E100e1, Ee0011),
+	square(E00e01, Ee0001, Ee0101, E10e01),
+	square(E1e001, Ee0001, Ee1001, E0e001),
+	square(E001e1, E001e0, E0011e, E0010e),
+	square(E00e10, E00e11, E0011e, E0001e),
+	square(E00e11, E00e01, E001e1, E000e1),
+	square(E0e011, E0e010, E0001e, E0101e),
+	square(E0e011, E010e1, E000e1, E0e001),
+	square(E0e101, E01e01, E00e01, E0e001),
+	square(E0001e, E1001e, Ee0010, Ee0011),
+	square(Ee0001, E000e1, E100e1, Ee0011),
+	square(E00e01, Ee0001, Ee0101, E10e01),
+	square(E1e001, Ee0001, Ee1001, E0e001),
+	square(E010e0, E010e1, E0100e, E0101e),
+	square(E01e01, E0100e, E01e00, E0110e),
+	square(E010e0, E01e10, E01e00, E011e0),
+	square(E0e101, E0e100, E0110e, E0010e),
+	square(E0e100, E001e0, E011e0, E0e110),
+	square(E00e10, E0e010, E01e10, E0e110),
+	square(Ee0100, Ee0101, E0010e, E1010e),
+	square(Ee0110, Ee0100, E001e0, E101e0),
+	square(Ee0110, E00e10, E10e10, Ee0010),
+	square(E0e010, Ee1010, Ee0010, E1e010),
+	square(E010e0, E010e1, E0100e, E0101e),
+	square(E01e01, E0100e, E01e00, E0110e),
+	square(E010e0, E01e10, E01e00, E011e0),
+	square(E0e101, E0e100, E0110e, E0010e),
+	square(E0e100, E001e0, E011e0, E0e110),
+	square(E00e10, E0e010, E01e10, E0e110),
+	square(Ee0100, Ee0101, E0010e, E1010e),
+	square(Ee0110, Ee0100, E001e0, E101e0),
+	square(Ee0110, E00e10, E10e10, Ee0010),
+	square(E0e010, Ee1010, Ee0010, E1e010),
+	square(E011e1, E0111e, E011e0, E0110e),
+	square(E01e10, E0111e, E0101e, E01e11),
+	square(E011e1, E01e01, E010e1, E01e11),
+	square(E0e111, E0011e, E0111e, E0e110),
+	square(E011e1, E0e101, E0e111, E001e1),
+	square(E0e011, E00e11, E0e111, E01e11),
+	square(E1011e, Ee0110, Ee0111, E0011e),
+	square(Ee0111, E001e1, Ee0101, E101e1),
+	square(Ee0111, E00e11, E10e11, Ee0011),
+	square(E0e011, Ee1011, E1e011, Ee0011),
+	square(E011e1, E0111e, E011e0, E0110e),
+	square(E01e10, E0111e, E0101e, E01e11),
+	square(E011e1, E01e01, E010e1, E01e11),
+	square(E0e111, E0011e, E0111e, E0e110),
+	square(E011e1, E0e101, E0e111, E001e1),
+	square(E0e011, E00e11, E0e111, E01e11),
+	square(E1011e, Ee0110, Ee0111, E0011e),
+	square(Ee0111, E001e1, Ee0101, E101e1),
+	square(Ee0111, E00e11, E10e11, Ee0011),
+	square(E0e011, Ee1011, E1e011, Ee0011),
+	square(E100e0, E1000e, E100e1, E1001e),
+	square(E1000e, E10e00, E10e01, E1010e),
+	square(E100e0, E10e10, E10e00, E101e0),
+	square(E1100e, E1e001, E1000e, E1e000),
+	square(E100e0, E1e000, E110e0, E1e010),
+	square(E1e000, E11e00, E10e00, E1e100),
+	square(E1100e, Ee1000, Ee1001, E0100e),
+	square(E010e0, Ee1000, Ee1010, E110e0),
+	square(Ee1100, Ee1000, E11e00, E01e00),
+	square(Ee1100, E0e100, Ee0100, E1e100),
+	square(E100e0, E1000e, E100e1, E1001e),
+	square(E1000e, E10e00, E10e01, E1010e),
+	square(E100e0, E10e10, E10e00, E101e0),
+	square(E1100e, E1e001, E1000e, E1e000),
+	square(E100e0, E1e000, E110e0, E1e010),
+	square(E1e000, E11e00, E10e00, E1e100),
+	square(E1100e, Ee1000, Ee1001, E0100e),
+	square(E010e0, Ee1000, Ee1010, E110e0),
+	square(Ee1100, Ee1000, E11e00, E01e00),
+	square(Ee1100, E0e100, Ee0100, E1e100),
+	square(E1011e, E101e0, E1010e, E101e1),
+	square(E1011e, E10e10, E10e11, E1001e),
+	square(E100e1, E10e11, E10e01, E101e1),
+	square(E1e011, E1101e, E1001e, E1e010),
+	square(E1e001, E1e011, E100e1, E110e1),
+	square(E1e001, E1e101, E11e01, E10e01),
+	square(Ee1011, Ee1010, E1101e, E0101e),
+	square(Ee1011, E010e1, Ee1001, E110e1),
+	square(Ee1101, E01e01, Ee1001, E11e01),
+	square(Ee1101, E0e101, E1e101, Ee0101),
+	square(E1011e, E101e0, E1010e, E101e1),
+	square(E1011e, E10e10, E10e11, E1001e),
+	square(E100e1, E10e11, E10e01, E101e1),
+	square(E1e011, E1101e, E1001e, E1e010),
+	square(E1e001, E1e011, E100e1, E110e1),
+	square(E1e001, E1e101, E11e01, E10e01),
+	square(Ee1011, Ee1010, E1101e, E0101e),
+	square(Ee1011, E010e1, Ee1001, E110e1),
+	square(Ee1101, E01e01, Ee1001, E11e01),
+	square(Ee1101, E0e101, E1e101, Ee0101),
+	square(E1100e, E110e0, E1101e, E110e1),
+	square(E1100e, E1110e, E11e00, E11e01),
+	square(E111e0, E11e00, E110e0, E11e10),
+	square(E1e101, E1110e, E1010e, E1e100),
+	square(E1e110, E111e0, E101e0, E1e100),
+	square(E1e110, E10e10, E1e010, E11e10),
+	square(Ee1101, Ee1100, E1110e, E0110e),
+	square(E111e0, Ee1100, Ee1110, E011e0),
+	square(Ee1110, Ee1010, E01e10, E11e10),
+	square(E1e110, Ee0110, Ee1110, E0e110),
+	square(E1100e, E110e0, E1101e, E110e1),
+	square(E1100e, E1110e, E11e00, E11e01),
+	square(E111e0, E11e00, E110e0, E11e10),
+	square(E1e101, E1110e, E1010e, E1e100),
+	square(E1e110, E111e0, E101e0, E1e100),
+	square(E1e110, E10e10, E1e010, E11e10),
+	square(Ee1101, Ee1100, E1110e, E0110e),
+	square(E111e0, Ee1100, Ee1110, E011e0),
+	square(Ee1110, Ee1010, E01e10, E11e10),
+	square(E1e110, Ee0110, Ee1110, E0e110),
+	square(E111e0, E1110e, E111e1, E1111e),
+	square(E1101e, E11e11, E1111e, E11e10),
+	square(E111e1, E11e11, E11e01, E110e1),
+	square(E1e110, E1011e, E1111e, E1e111),
+	square(E1e101, E111e1, E101e1, E1e111),
+	square(E1e011, E11e11, E10e11, E1e111),
+	square(Ee1111, Ee1110, E0111e, E1111e),
+	square(E011e1, Ee1101, Ee1111, E111e1),
+	square(Ee1111, Ee1011, E11e11, E01e11),
+	square(Ee1111, Ee0111, E0e111, E1e111),
+	square(E111e0, E1110e, E111e1, E1111e),
+	square(E1101e, E11e11, E1111e, E11e10),
+	square(E111e1, E11e11, E11e01, E110e1),
+	square(E1e110, E1011e, E1111e, E1e111),
+	square(E1e101, E111e1, E101e1, E1e111),
+	square(E1e011, E11e11, E10e11, E1e111),
+	square(Ee1111, Ee1110, E0111e, E1111e),
+	square(E011e1, Ee1101, Ee1111, E111e1),
+	square(Ee1111, Ee1011, E11e11, E01e11),
+	square(Ee1111, Ee0111, E0e111, E1e111).
+
+find4(Zen) :- findall([E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20, E21, E22, E23, E24, E25, E26, E27, E28, E29, E30, E31, E32], dim4(E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20, E21, E22, E23, E24, E25, E26, E27, E28, E29, E30, E31, E32), List), length(List, Zen).
+
+find42(Zen) :- findall([E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20, E21, E22, E23, E24, E25, E26, E27, E28, E29, E30, E31, E32], dim42(E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20, E21, E22, E23, E24, E25, E26, E27, E28, E29, E30, E31, E32), List), length(List, Zen).
+
+
+find5(Zen) :- findall([E0000e, E0001e, E000e0, E000e1, E0010e, E0011e, E001e0, E001e1, E00e00, E00e01, E00e10, E00e11, E0100e, E0101e, E010e0, E010e1, E0110e, E0111e, E011e0, E011e1, E01e00, E01e01, E01e10, E01e11, E0e000, E0e001, E0e010, E0e011, E0e100, E0e101, E0e110, E0e111, E1000e, E1001e, E100e0, E100e1, E1010e, E1011e, E101e0, E101e1, E10e00, E10e01, E10e10, E10e11, E1100e, E1101e, E110e0, E110e1, E1110e, E1111e, E111e0, E111e1, E11e00, E11e01, E11e10, E11e11, E1e000, E1e001, E1e010, E1e011, E1e100, E1e101, E1e110, E1e111, Ee0000, Ee0001, Ee0010, Ee0011, Ee0100, Ee0101, Ee0110, Ee0111, Ee1000, Ee1001, Ee1010, Ee1011, Ee1100, Ee1101, Ee1110, Ee1111], dim5(E0000e, E0001e, E000e0, E000e1, E0010e, E0011e, E001e0, E001e1, E00e00, E00e01, E00e10, E00e11, E0100e, E0101e, E010e0, E010e1, E0110e, E0111e, E011e0, E011e1, E01e00, E01e01, E01e10, E01e11, E0e000, E0e001, E0e010, E0e011, E0e100, E0e101, E0e110, E0e111, E1000e, E1001e, E100e0, E100e1, E1010e, E1011e, E101e0, E101e1, E10e00, E10e01, E10e10, E10e11, E1100e, E1101e, E110e0, E110e1, E1110e, E1111e, E111e0, E111e1, E11e00, E11e01, E11e10, E11e11, E1e000, E1e001, E1e010, E1e011, E1e100, E1e101, E1e110, E1e111, Ee0000, Ee0001, Ee0010, Ee0011, Ee0100, Ee0101, Ee0110, Ee0111, Ee1000, Ee1001, Ee1010, Ee1011, Ee1100, Ee1101, Ee1110, Ee1111), List), length(List, Zen).
